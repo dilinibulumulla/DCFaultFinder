@@ -141,6 +141,8 @@ public interface MainFrameService {
 
 	public void setWantsToExecute(boolean wantsToExecute);
 
+	public void setVariation(String variation);
+
 	public boolean getWantsToExecute();
 
 	public void runScript() throws IOException, InterruptedException;

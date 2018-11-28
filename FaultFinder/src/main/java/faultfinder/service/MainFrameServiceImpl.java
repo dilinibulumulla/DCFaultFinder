@@ -62,6 +62,8 @@ public class MainFrameServiceImpl implements MainFrameService {
 	private int fault;
 	private int bundle = -1000;
 	private String userName = null;
+
+	private String variation = "";
 	private boolean mouseReady;
 	private boolean isOnJlab;
 
@@ -483,9 +485,15 @@ public class MainFrameServiceImpl implements MainFrameService {
 	}
 
 	private void addToQueryFile(Integer i) {
+
 		try {
-			writer.write("ccdb add calibration/dc/tracking/wire_status -r " + i + "-" + i + " Run_" + i
-					+ ".txt #Adding run " + i);
+			if (this.variation.isEmpty()) {
+				writer.write("ccdb add calibration/dc/tracking/wire_status -r " + i + "-" + i + " Run_" + i
+						+ ".txt #Adding run " + i);
+			} else {
+				writer.write("ccdb add calibration/dc/tracking/wire_status -v " + this.variation + " -r " + i + "-" + i
+						+ " Run_" + i + ".txt #Adding run " + i);
+			}
 			writer.newLine();
 
 		} catch (IOException e) {
@@ -552,6 +560,10 @@ public class MainFrameServiceImpl implements MainFrameService {
 
 	public void setWantsToExecute(boolean wantsToExecute) {
 		this.wantsToExecute = wantsToExecute;
+	}
+
+	public void setVariation(String variation) {
+		this.variation = variation;
 	}
 
 	public boolean getWantsToExecute() {
